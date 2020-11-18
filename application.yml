@@ -1,0 +1,5 @@
+database:
+  url: jdbc:postgresql://localhost:5432/web-automation
+  driverClass: org.postgresql.Driver
+  user: web-automation
+  password: super-secret-pass

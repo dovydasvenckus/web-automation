@@ -3,8 +3,10 @@ package dev.dovydasvenckus.webautomation;
 import io.dropwizard.Application;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
+import io.dropwizard.jdbi3.JdbiFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.jdbi.v3.core.Jdbi;
 
 public class App extends Application<AppConfiguration> {
 
@@ -27,7 +29,9 @@ public class App extends Application<AppConfiguration> {
   }
 
   @Override
-  public void run(AppConfiguration appConfiguration, Environment environment) {
+  public void run(AppConfiguration configuration, Environment environment) {
+    JdbiFactory jdbiFactory = new JdbiFactory();
+    Jdbi jdbi = jdbiFactory.build(environment, configuration.getDataSourceFactory(), "postgresql");
   }
 
 }
