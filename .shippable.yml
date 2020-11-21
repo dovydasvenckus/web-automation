@@ -1,0 +1,18 @@
+language: java
+
+jdk:
+  - openjdk11
+
+build:
+  pre_ci_boot:
+    image_name: drydock/c7golall
+    image_tag: v7.1.4
+
+  ci:
+    - ./gradlew build
+
+  post_ci:
+    - ./ci/copy-test-results.sh
+
+  on_failure:
+    - ./ci/copy-test-results.sh
