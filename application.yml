@@ -1,3 +1,6 @@
+server:
+  rootPath: /api/
+
 database:
   url: jdbc:postgresql://localhost:5432/web-automation
   driverClass: org.postgresql.Driver

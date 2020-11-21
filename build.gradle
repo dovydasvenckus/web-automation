@@ -18,7 +18,9 @@ repositories {
 
 dependencies {
     implementation "io.dropwizard:dropwizard-core:${dropWizardVersion}"
+
     implementation "io.dropwizard:dropwizard-jdbi3:${dropWizardVersion}"
+    implementation "io.dropwizard:dropwizard-migrations:${dropWizardVersion}"
     implementation 'org.postgresql:postgresql:42.2.18'
 
     testImplementation 'org.codehaus.groovy:groovy-all:2.5.12'
