@@ -1,0 +1,14 @@
+server:
+  applicationConnectors:
+    - type: http
+      port: 0
+  adminConnectors:
+    - type: http
+      port: 0
+  rootPath: /api/
+
+database:
+  url: jdbc:postgresql://localhost:5432/web-automation
+  driverClass: org.postgresql.Driver
+  user: web-automation
+  password: super-secret-pass

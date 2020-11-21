@@ -5,6 +5,7 @@ import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -33,7 +34,7 @@ public class TaskResource {
           createTaskRequest.getCron(),
           createTaskRequest.getUrl(),
           createTaskRequest.getItemNameSelector(),
-          createTaskRequest.getItemNameSelector(),
+          createTaskRequest.getItemUrlSelector(),
           createTaskRequest.getItemPriceSelector()
       );
 
@@ -44,7 +45,12 @@ public class TaskResource {
     return Response.created(formatUri(createdTask)).build();
   }
 
+  @GET
+  public Response getAll() {
+    return Response.ok(taskDAO.findAllTasks()).build();
+  }
+
   private URI formatUri(Task createdTask) {
-    return URI.create("/" + createdTask.getId().toString());
+    return URI.create("/api/tasks/" + createdTask.getId().toString());
   }
 }

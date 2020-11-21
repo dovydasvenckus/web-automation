@@ -1,6 +1,9 @@
 package dev.dovydasvenckus.webautomation.task;
 
+import java.util.List;
+import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 public interface TaskDAO {
@@ -11,4 +14,8 @@ public interface TaskDAO {
           + "VALUES (:id, :cron, :url, :itemNameSelector, :itemUrlSelector, :itemPriceSelector)"
   )
   void insert(@BindBean Task task);
+
+  @SqlQuery("SELECT * FROM tasks")
+  @RegisterBeanMapper(Task.class)
+  List<Task> findAllTasks();
 }

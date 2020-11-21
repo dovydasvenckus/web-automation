@@ -10,6 +10,7 @@ mainClassName = 'dev.dovydasvenckus.webautomation.App'
 
 ext {
     dropWizardVersion = '2.0.15'
+    testContainersVersion = '1.15.0'
 }
 
 repositories {
@@ -26,6 +27,8 @@ dependencies {
     testImplementation 'org.codehaus.groovy:groovy-all:2.5.12'
     testImplementation 'org.spockframework:spock-core:1.3-groovy-2.5'
     testImplementation "io.dropwizard:dropwizard-testing:${dropWizardVersion}"
+    testImplementation "org.testcontainers:spock:${testContainersVersion}"
+    testImplementation "org.testcontainers:postgresql:${testContainersVersion}"
 }
 
 checkstyle {
