@@ -1,56 +1,44 @@
-package dev.dovydasvenckus.webautomation.task;
+package dev.dovydasvenckus.webautomation.task
 
-import java.net.URI;
-import java.util.UUID;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import org.jdbi.v3.core.Jdbi;
+import org.jdbi.v3.core.Handle
+import org.jdbi.v3.core.Jdbi
+import java.net.URI
+import java.util.*
+import javax.validation.Valid
+import javax.ws.rs.*
+import javax.ws.rs.core.MediaType
+import javax.ws.rs.core.Response
 
 @Path("/tasks")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class TaskResource {
+class TaskResource(private val jdbi: Jdbi) {
+    private val taskDAO: TaskDAO = jdbi.onDemand(TaskDAO::class.java)
 
-  private final Jdbi jdbi;
-  private final TaskDAO taskDAO;
+    @POST
+    fun create(@Valid createTaskRequest: CreateTaskRequest): Response {
+        val createdTask = jdbi.inTransaction<Task, RuntimeException> { _: Handle? ->
+            val task = Task(
+                    id = UUID.randomUUID(),
+                    cron = createTaskRequest.cron!!,
+                    url = createTaskRequest.url!!,
+                    itemNameSelector = createTaskRequest.itemNameSelector!!,
+                    itemUrlSelector = createTaskRequest.itemUrlSelector!!,
+                    itemPriceSelector = createTaskRequest.itemPriceSelector
+            )
+            taskDAO.insert(task)
+            task
+        }
+        return Response.created(formatUri(createdTask)).build()
+    }
 
-  public TaskResource(Jdbi jdbi) {
-    this.jdbi = jdbi;
-    this.taskDAO = jdbi.onDemand(TaskDAO.class);
-  }
+    @GET
+    fun getFall(): Response {
+        return Response.ok(taskDAO.findAllTasks()).build()
+    }
 
-  @POST
-  public Response create(@NotNull @Valid CreateTaskRequest createTaskRequest) {
-    Task createdTask = jdbi.inTransaction(handle -> {
-      Task task = new Task(
-          UUID.randomUUID(),
-          createTaskRequest.getCron(),
-          createTaskRequest.getUrl(),
-          createTaskRequest.getItemNameSelector(),
-          createTaskRequest.getItemUrlSelector(),
-          createTaskRequest.getItemPriceSelector()
-      );
+    private fun formatUri(createdTask: Task): URI {
+        return URI.create("/api/tasks/" + createdTask.id.toString())
+    }
 
-      taskDAO.insert(task);
-      return task;
-    });
-
-    return Response.created(formatUri(createdTask)).build();
-  }
-
-  @GET
-  public Response getAll() {
-    return Response.ok(taskDAO.findAllTasks()).build();
-  }
-
-  private URI formatUri(Task createdTask) {
-    return URI.create("/api/tasks/" + createdTask.getId().toString());
-  }
 }

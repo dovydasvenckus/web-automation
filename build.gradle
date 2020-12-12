@@ -4,6 +4,7 @@ plugins {
     id 'application'
     id 'checkstyle'
     id "com.github.johnrengelman.shadow" version "6.1.0"
+    id 'org.jetbrains.kotlin.jvm' version '1.4.21'
 }
 
 mainClassName = 'dev.dovydasvenckus.webautomation.App'
@@ -22,6 +23,9 @@ dependencies {
 
     implementation "io.dropwizard:dropwizard-jdbi3:${dropWizardVersion}"
     implementation "io.dropwizard:dropwizard-migrations:${dropWizardVersion}"
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.12.0'
+    implementation 'org.jdbi:jdbi3-kotlin:3.18.0'
+    implementation 'org.jdbi:jdbi3-kotlin-sqlobject:3.18.0'
     implementation 'org.postgresql:postgresql:42.2.18'
 
     testImplementation 'org.codehaus.groovy:groovy-all:2.5.12'

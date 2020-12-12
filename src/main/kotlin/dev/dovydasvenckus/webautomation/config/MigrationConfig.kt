@@ -1,13 +1,13 @@
-package dev.dovydasvenckus.webautomation.config;
+package dev.dovydasvenckus.webautomation.config
 
-import dev.dovydasvenckus.webautomation.AppConfiguration;
-import io.dropwizard.db.PooledDataSourceFactory;
-import io.dropwizard.migrations.MigrationsBundle;
+import io.dropwizard.migrations.MigrationsBundle
+import dev.dovydasvenckus.webautomation.AppConfiguration
+import io.dropwizard.db.PooledDataSourceFactory
+import java.lang.IllegalArgumentException
+import java.lang.NullPointerException
 
-public class MigrationConfig extends MigrationsBundle<AppConfiguration> {
-
-  @Override
-  public PooledDataSourceFactory getDataSourceFactory(AppConfiguration configuration) {
-    return configuration.getDataSourceFactory();
-  }
+class MigrationConfig : MigrationsBundle<AppConfiguration?>() {
+    override fun getDataSourceFactory(configuration: AppConfiguration?): PooledDataSourceFactory {
+        return configuration?.dataSourceFactory ?: throw IllegalArgumentException("")
+    }
 }

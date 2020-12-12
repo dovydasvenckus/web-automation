@@ -1,25 +1,13 @@
-package dev.dovydasvenckus.webautomation;
+package dev.dovydasvenckus.webautomation
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.dropwizard.Configuration;
-import io.dropwizard.db.DataSourceFactory;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonProperty
+import io.dropwizard.Configuration
+import io.dropwizard.db.DataSourceFactory
+import javax.validation.Valid
+import javax.validation.constraints.NotNull
 
-public class AppConfiguration extends Configuration {
-
-  @Valid
-  @NotNull
-  private DataSourceFactory database = new DataSourceFactory();
-
-  @JsonProperty("database")
-  public void setDataSourceFactory(DataSourceFactory factory) {
-    this.database = factory;
-  }
-
-  @JsonProperty("database")
-  public DataSourceFactory getDataSourceFactory() {
-    return database;
-  }
-
+class AppConfiguration : Configuration() {
+    @get:JsonProperty("database")
+    @set:JsonProperty("database")
+    var dataSourceFactory: @Valid @NotNull DataSourceFactory? = DataSourceFactory()
 }

@@ -41,11 +41,11 @@ class TaskApiSpec extends Specification {
     def "should return 500 when telegram API is down"() {
         given:
             def requestBody = new CreateTaskRequest(
-                    cron: 'crony',
-                    url: 'someUrl',
-                    itemNameSelector: 'nameSelector',
-                    itemUrlSelector: 'urlSelector',
-                    itemPriceSelector: 'priceSelector'
+                    'crony',
+                    'someUrl',
+                    'nameSelector',
+                    'urlSelector',
+                    'priceSelector'
             )
         when:
             Response response = testTargetApi
