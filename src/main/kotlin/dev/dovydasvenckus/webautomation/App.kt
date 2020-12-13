@@ -21,8 +21,8 @@ class App : Application<AppConfiguration>() {
         bootstrap.addBundle(MigrationConfig())
         bootstrap.objectMapper.registerModule(KotlinModule())
         bootstrap.configurationSourceProvider = SubstitutingSourceProvider(
-                bootstrap.configurationSourceProvider,
-                EnvironmentVariableSubstitutor(false)
+            bootstrap.configurationSourceProvider,
+            EnvironmentVariableSubstitutor(false)
         )
     }
 
