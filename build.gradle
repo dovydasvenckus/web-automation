@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'groovy'
     id 'application'
-    id 'checkstyle'
     id "com.github.johnrengelman.shadow" version "6.1.0"
     id 'org.jetbrains.kotlin.jvm' version '1.4.21'
 }
@@ -33,9 +32,4 @@ dependencies {
     testImplementation "io.dropwizard:dropwizard-testing:${dropWizardVersion}"
     testImplementation "org.testcontainers:spock:${testContainersVersion}"
     testImplementation "org.testcontainers:postgresql:${testContainersVersion}"
-}
-
-checkstyle {
-    configFile = rootProject.file('checkstyle.xml')
-    toolVersion ="8.20"
 }
