@@ -6,14 +6,10 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery
 import org.jdbi.v3.sqlobject.statement.SqlUpdate
 
 interface TaskDAO {
-    @SqlUpdate(
-        "INSERT INTO tasks " +
-            "(id, cron, url, item_name_selector, item_url_selector, item_price_selector) " +
-            "VALUES (:id, :cron, :url, :itemNameSelector, :itemUrlSelector, :itemPriceSelector)"
-    )
+    @SqlUpdate("INSERT INTO tasks (id, scraper_id, cron, url) VALUES (:id, :scraperId, :cron, :url)")
     fun insert(@BindKotlin task: Task?)
 
     @SqlQuery("SELECT * FROM tasks")
     @RegisterKotlinMapper(Task::class)
-    fun findAllTasks(): List<Task?>?
+    fun findAllTasks(): List<Task>
 }

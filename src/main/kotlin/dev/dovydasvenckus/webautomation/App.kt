@@ -2,6 +2,7 @@ package dev.dovydasvenckus.webautomation
 
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import dev.dovydasvenckus.webautomation.config.MigrationConfig
+import dev.dovydasvenckus.webautomation.scraper.ScraperResource
 import dev.dovydasvenckus.webautomation.task.TaskResource
 import io.dropwizard.Application
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor
@@ -32,6 +33,7 @@ class App : Application<AppConfiguration>() {
         jdbi.installPlugin(KotlinPlugin())
         jdbi.installPlugin(KotlinSqlObjectPlugin())
         environment.jersey().register(TaskResource(jdbi))
+        environment.jersey().register(ScraperResource(jdbi))
     }
 
     companion object {

@@ -1,11 +1,11 @@
 package dev.dovydasvenckus.webautomation.task
 
+import java.util.UUID
 import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
 
 data class CreateTaskRequest(
+    @field:NotNull val scraperId: UUID,
     @field:NotBlank val cron: String?,
-    @field:NotBlank val url: String?,
-    @field:NotBlank val itemNameSelector: String?,
-    @field:NotBlank val itemUrlSelector: String?,
-    val itemPriceSelector: String?
+    @field:NotBlank val url: String?
 )

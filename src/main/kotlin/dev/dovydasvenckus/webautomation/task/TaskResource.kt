@@ -24,11 +24,9 @@ class TaskResource(private val jdbi: Jdbi) {
         val createdTask = jdbi.inTransaction<Task, RuntimeException> { _: Handle? ->
             val task = Task(
                 id = UUID.randomUUID(),
+                scraperId = createTaskRequest.scraperId,
                 cron = createTaskRequest.cron!!,
-                url = createTaskRequest.url!!,
-                itemNameSelector = createTaskRequest.itemNameSelector!!,
-                itemUrlSelector = createTaskRequest.itemUrlSelector!!,
-                itemPriceSelector = createTaskRequest.itemPriceSelector
+                url = createTaskRequest.url!!
             )
             taskDAO.insert(task)
             task

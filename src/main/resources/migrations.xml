@@ -1,29 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <databaseChangeLog
-  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-  <changeSet id="1" author="dovydas.venckus">
-    <createTable tableName="tasks">
-      <column name="id" type="UUID">
-        <constraints primaryKey="true" nullable="false"/>
-      </column>
-      <column name="cron" type="VARCHAR(32)">
-        <constraints nullable="false"/>
-      </column>
-      <column name="url" type="VARCHAR(2048)">
-        <constraints nullable="false"/>
-      </column>
-      <column name="item_name_selector" type="VARCHAR(256)">
-        <constraints nullable="false"/>
-      </column>
-      <column name="item_url_selector" type="VARCHAR(256)">
-        <constraints nullable="false"/>
-      </column>
-      <column name="item_price_selector" type="VARCHAR(256)"/>
-    </createTable>
-  </changeSet>
+    <changeSet id="1" author="dovydas.venckus">
+        <createTable tableName="tasks">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cron" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="url" type="VARCHAR(2048)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="item_name_selector" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="item_url_selector" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="item_price_selector" type="VARCHAR(256)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2-create-scraper-entity" author="dovydas.venckus">
+        <createTable tableName="scrapers">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="item_name_selector" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="item_url_selector" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="item_price_selector" type="VARCHAR(256)"/>
+        </createTable>
+
+        <addColumn tableName="tasks">
+            <column name="scraper_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_task_scraper" references="scrapers(id)"/>
+            </column>
+        </addColumn>
+
+        <dropColumn tableName="tasks" columnName="item_name_selector"/>
+        <dropColumn tableName="tasks" columnName="item_url_selector"/>
+        <dropColumn tableName="tasks" columnName="item_price_selector"/>
+    </changeSet>
 </databaseChangeLog>
